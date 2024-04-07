@@ -3,28 +3,39 @@
 
 int main()
 {
-    DigitalIn gasDetector(D2);
-    DigitalIn overTempDetector(D3);
-    DigitalIn alarmOffButton(BUTTON1);
+    // Cambio el codigo para utilizar c en lugar de c++
 
-    DigitalOut alarmLed(LED1);
+    // FALTA INICIALIZAR LOS GPIO
+    gpio_t  gpio_d2, gpio_d3, gpio_b1, gpio_l1;
 
-    gasDetector.mode(PullDown);
-    overTempDetector.mode(PullDown);
+    gpio_init_in(&gpio_d2, D2); //DigitalIn gasDetector(D2);
+    gpio_init_in(&gpio_d3, D3); //DigitalIn overTempDetector(D3);
+    gpio_init_in(&gpio_b1, BUTTON1); //DigitalIn alarmOffButton(BUTTON1);
+    gpio_init_out(&gpio_l1,LED1); //DigitalOut alarmLed(LED1);
 
-    alarmLed = OFF;
+    //gasDetector.mode(PullDown);
+    core_util_critical_section_enter();
+    gpio_mode(&gpio_d2, PullDown);
+    core_util_critical_section_exit();
+    
+    //overTempDetector.mode(PullDown);
+    core_util_critical_section_enter();
+    gpio_mode(&gpio_d3, PullDown);
+    core_util_critical_section_exit();
+
+     gpio_write(&gpio_l1, OFF); //alarmLed = OFF;
 
     bool alarmState = OFF;
 
     while (true) {
 
-        if ( gasDetector || overTempDetector ) {
+        if (gpio_read(&gpio_d2) || gpio_read(&gpio_d3)){ //if ( gasDetector || overTempDetector ) {
             alarmState = ON;
         }
 
-        alarmLed = alarmState;
+        gpio_write(&gpio_l1, alarmState); //alarmLed = alarmState;
 
-        if ( alarmOffButton ) {
+        if (gpio_read(&gpio_b1){ // )if ( alarmOffButton ) {
             alarmState = OFF;
         }
     }
