@@ -5,7 +5,6 @@ int main()
 {
     // Cambio el codigo para utilizar c en lugar de c++
 
-    // FALTA INICIALIZAR LOS GPIO
     gpio_t  gpio_d2, gpio_d3, gpio_b1, gpio_l1;
 
     gpio_init_in(&gpio_d2, D2); //DigitalIn gasDetector(D2);
@@ -38,5 +37,9 @@ int main()
         if (gpio_read(&gpio_b1){ // )if ( alarmOffButton ) {
             alarmState = OFF;
         }
+        
+         printf("Gas: %d\n", gpio_read(&gpio_d2));
+         printf("Temperatura: %d\n", gpio_read(&gpio_d3));
+         printf("LED: %d\n", gpio_read(&gpio_l1));
     }
 }
