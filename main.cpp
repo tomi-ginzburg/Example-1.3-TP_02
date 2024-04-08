@@ -34,7 +34,7 @@ int main()
 
         gpio_write(&gpio_l1, alarmState); //alarmLed = alarmState;
 
-        if (gpio_read(&gpio_b1){ // )if ( alarmOffButton ) {
+        if (gpio_read(&gpio_b1)){ // )if ( alarmOffButton ) {
             alarmState = OFF;
         }
         
